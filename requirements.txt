@@ -1,0 +1,19 @@
+<<<<<<< HEAD
+fastapi
+uvicorn
+=======
+# Install base packages first
+torch
+torchvision
+torchaudio
+fastapi
+uvicorn
+langchain[all]
+# Install packages for data processing next
+>>>>>>> main
+pinecone-client
+openai
+unstructured
+unstructured[local-inference]
+detectron2@git+https://github.com/facebookresearch/detectron2.git@e2ce8dc#egg=detectron2
+pytest

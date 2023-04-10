@@ -1,0 +1,10 @@
+# Install base packages first
+requests
+tiktoken
+fastapi
+uvicorn
+langchain[all]
+# Install packages for data processing next
+pinecone-client
+openai
+pytest

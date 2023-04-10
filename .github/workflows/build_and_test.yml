@@ -1,0 +1,90 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install poppler
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils
+
+      - name: Cache Python packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install base packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install torch
+          pip install torchvision
+          pip install torchaudio
+          pip install fastapi
+          pip install uvicorn
+
+      - name: Install data processing packages
+        run: |
+          pip install langchain[all]
+          pip install pinecone-client
+          pip install openai
+          pip install unstructured
+          pip install unstructured[local-inference]
+          pip install pytest
+
+      - name: Install detectron2
+        run: |
+          pip install detectron2@git+https://github.com/facebookresearch/detectron2.git@e2ce8dc#egg=detectron2
+
+      # - name: Install dependencies
+      #   run: |
+      #     python -m pip install --upgrade pip
+      #     pip install -r requirements.txt
+
+
+      - name: Run tests
+        run: |
+          pytest -k "test_search_similar_text_blocks"
+          pytest -k "generate_answer"
+        env:
+          PINECONE_API_KEY: ${{ secrets.PINECONE_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+      - name: Build Docker images
+        run: |
+          docker build -t book_indexer_api -f api/book_indexer_api/Dockerfile .
+          docker build -t book_assistant_api -f api/book_assistant_api/Dockerfile .
+
+      - name: Test endpoints
+        run: |
+          docker run -d --name book_indexer_api -p 8000:8000 -e PINECONE_API_KEY="${{ secrets.PINECONE_API_KEY }}" -e OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}" -e INDEX_NAME="book-assistant" book_indexer_api
+          docker run -d --name book_assistant_api -p 8001:8001 -e PINECONE_API_KEY="${{ secrets.PINECONE_API_KEY }}" -e OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}" -e INDEX_NAME="book-assistant" book_assistant_api
+          sleep 15  # Give the services time to start
+          # Add any test scripts or commands here to test the endpoints
+
+      - name: Cleanup
+        run: |
+          docker stop book_indexer_api
+          docker rm book_indexer_api
+          docker stop book_assistant_api
+          docker rm book_assistant_api
