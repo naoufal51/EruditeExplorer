@@ -2,6 +2,8 @@
 
 A chatbot application that allows users to ask questions about a book, and it provides answers based on the book's content. The chatbot is built using FastAPI for the backend, Chatscope for the chat UI, and React for the frontend.
 
+![Book assistant]('figs/book_assistant.gif')
+
 ## Features
 
 * Natural language processing capabilities
