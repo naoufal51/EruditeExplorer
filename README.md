@@ -61,7 +61,7 @@ A chatbot application that allows users to ask questions about a book, and it pr
     cd ./frontend
     npm start
     ```
-    Open http://localhost:3000 in your browser to view the chat UI.
+    Open http://localhost:3001 in your browser to view the chat UI.
 
 3. Index a book by sending a PDF file by using the attachement in UI or using the following example command:
     ```sh
