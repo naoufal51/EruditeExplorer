@@ -1,19 +1,15 @@
-<<<<<<< HEAD
-fastapi
-uvicorn
-=======
 # Install base packages first
-torch
-torchvision
-torchaudio
-fastapi
-uvicorn
-langchain[all]
+torch==2.0.1
+torchaudio==2.0.2
+torchvision==0.15.2
+fastapi==0.100.0
+uvicorn==0.23.0
+langchain==0.0.234
+tiktoken==0.4.0
 # Install packages for data processing next
->>>>>>> main
-pinecone-client
-openai
-unstructured
-unstructured[local-inference]
-detectron2@git+https://github.com/facebookresearch/detectron2.git@e2ce8dc#egg=detectron2
-pytest
+pinecone-client==2.2.2
+openai==0.27.8
+unstructured==0.8.1
+unstructured-inference==0.5.5
+detectron2@git+https://github.com/facebookresearch/detectron2.git@v0.6
+pytest==7.4.0

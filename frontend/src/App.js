@@ -1,52 +1,4 @@
-// import logo from './logo.svg';
-// import './App.css';
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default App;
-
-
-// import React from 'react';
-// import './App.css';
-// import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
-// import { MainContainer, ChatContainer, MessageList, MessageInput } from '@chatscope/chat-ui-kit-react';
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <MainContainer>
-//         <ChatContainer>
-//           <MessageList />
-//           <MessageInput placeholder="Type a message" />
-//         </ChatContainer>
-//       </MainContainer>
-//     </div>
-//   );
-// }
-
-// export default App;
-
-
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./App.css";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
@@ -64,6 +16,27 @@ function App() {
       direction: "incoming",
     },
   ]);
+
+  const fileInputRef = useRef();
+
+  const handleFileUpload = async (event) => {
+    const file = event.target.files[0];
+
+    // Create a FormData instance
+    const formData = new FormData();
+
+    // Append the file to the form data
+    formData.append('pdf_file', file);
+
+    // Send a POST request to the server with the form data
+    const response = await fetch("http://localhost:8001/index", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await response.json();
+    console.log(data);
+  };
 
   const sendMessage = async (messageText) => {
     // Add user's message to the list
@@ -97,7 +70,6 @@ function App() {
       },
     ]);
   };
-
   return (
     <div className="App">
       <ChatContainer>
@@ -109,11 +81,23 @@ function App() {
         <MessageInput
           placeholder="Type your message here..."
           onSend={(messageText) => sendMessage(messageText)}
+          attachButton={true}
+          onAttachClick={() => {
+            console.log('Attachment button clicked');
+            console.log('fileInputRef.current:', fileInputRef.current);
+            fileInputRef.current.click();
+          }}
         />
       </ChatContainer>
+      <input
+        type="file"
+        ref={fileInputRef}
+        style={{ display: 'none' }}
+        onChange={handleFileUpload}
+      />
     </div>
   );
+
 }
 
 export default App;
-

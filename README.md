@@ -24,8 +24,8 @@ A chatbot application that allows users to ask questions about a book, and it pr
 ### Installation
 1. Clone the repo
    ```sh
-   git clone https://github.com/naoufal51/book-assistant-chatbot.git
-   cd book-assistant-chatbot
+   git clone https://github.com/naoufal51/book_assistant.git
+   cd book_assistant
     ```
 2. Create a virtual environment and install the required Python dependencies:
     ```sh
@@ -43,30 +43,26 @@ A chatbot application that allows users to ask questions about a book, and it pr
     cd frontend
     npm install
     ```
+5. Create a Pinecone index called 'book-assistant' with 1536 dimensions (check [openai_embeddings](https://platform.openai.com/docs/guides/embeddings/what-are-embeddings))
 
 ### Usage
 1. Start the backend server:
     ```sh
-    cd path/to/book-assistant-chatbot
-    uvicorn main:app --host 0.0.0.0 --port 8001 --reload
+    cd ./api/book_assistant
+    python main.py
     ```
-2. Start the book_indexer_api server:
+2. Start the frontend server:
     ```sh
-        cd path/to/book-assistant-chatbot/book_indexer_api
-        uvicorn main:app --host 0.0.0.0 --port 8002 --reload
-    ```
-3. Index a book by sending a PDF file to the /index endpoint of the book_indexer_api server using a REST client or curl, for example:
-    ```sh
-    curl -X POST -H "Content-Type: multipart/form-data" -F "pdf_file=@path/to/your/book.pdf" http://localhost:8002/index
-    ```
-    The server will respond with a message indicating that the document has been indexed successfully.
-
-4. Start the frontend server:
-    ```sh
-    cd path/to/book-assistant-chatbot/frontend
+    cd ./frontend
     npm start
     ```
-Open http://localhost:3000 in your browser to view the chat UI.
+    Open http://localhost:3000 in your browser to view the chat UI.
+
+3. Index a book by sending a PDF file by using the attachement in UI or using the following example command:
+    ```sh
+    curl -X POST -H "Content-Type: multipart/form-data" -F "pdf_file=@path/to/your/book.pdf" http://localhost:8001/index
+    ```
+    The server will respond with a message indicating that the document has been indexed successfully.
 
 
 ## License
