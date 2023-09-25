@@ -1,20 +1,25 @@
-# Book Assistant Chatbot
+# Erudite Explorer: A RAG-Powered Book Assistant Chatbot
 
-A chatbot application that allows users to ask questions about a book, and it provides answers based on the book's content. The chatbot is built using FastAPI for the backend, Chatscope for the chat UI, and React for the frontend.
+Erudite Explorer is a chatbot designed to answer user queries about a book based on its content. The chatbot employs Retrieval-Augmented Generation (RAG) based on langchain and OpenAI, FastAPI, Chatscope, and React to deliver precise and contextually enriched responses by extracting relevant information from the book.
 
-### Click on the image bellow to watch a demo:
+### 🎥 [Watch the Demo](https://youtu.be/EmZpadO355U)
 <a href="https://youtu.be/EmZpadO355U" target="_blank">
   <img src="figs/book_assistant.png" alt="Demo Video">
 </a>
 
-## Features
+## 🌟 Features
 
-* Natural language processing capabilities
-* Book indexing and searching for relevant information
-* Interactive chat UI with Chatscope
+* 🧠 Advanced Natural Language Processing
+* 📚 Retrieval-Augmented Generation (RAG) for Informed Responses
+* 📖 Efficient Book Indexing and Searching
+* 💬 Interactive and User-friendly Chat UI with Chatscope
 
-## Getting Started
+## 📘 Retrieval-Augmented Generation (RAG)
 
+Retrieval-Augmented Generation (RAG) harmoniously blends Advanced Natural Language Processing and efficient book indexing to seamlessly catalog and retrieve pertinent information from books. By integrating with LangChain and OpenAI, RAG not only generates highly informed and contextually enriched responses but also ensures a deeper and more insightful interaction with the literary content, allowing users to explore the intricate dimensions of books with unprecedented clarity and depth.
+
+
+## 🚀 Getting Started
 ### Prerequisites
 * Python 3.7 or higher
 * Node.js and npm
@@ -25,7 +30,6 @@ A chatbot application that allows users to ask questions about a book, and it pr
 * Chatscope
 * Langchain
 * Torch
-
 ### Installation
 1. Clone the repo
    ```sh
